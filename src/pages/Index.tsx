@@ -3,7 +3,6 @@ import { useState, useRef } from "react";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import MediaUploadSection from "@/components/MediaUploadSection";
-import CameraSection from "@/components/CameraSection";
 import AboutSection from "@/components/AboutSection";
 import HowToSection from "@/components/HowToSection";
 import FaqSection from "@/components/FaqSection";
@@ -60,7 +59,6 @@ const Index = () => {
           <MediaUploadSection />
         </div>
         
-        <CameraSection />
         <AboutSection />
         <HowToSection />
         <FaqSection />
