@@ -1,10 +1,10 @@
-
 import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useToast } from "@/components/ui/use-toast";
-import { Loader2, Upload, Image, Video, Check, X, AlertTriangle } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { Loader2, Upload, Image, Video, Check, X } from "lucide-react";
+import { analyzeImage, analyzeVideo } from "@/utils/mlModelApi";
 
 const MediaUploadSection = () => {
   const { toast } = useToast();
@@ -61,7 +61,6 @@ const MediaUploadSection = () => {
   };
 
   const handleAnalyze = async () => {
-    // Check if we have a file to analyze
     const fileToAnalyze = activeTab === "video" ? videoFile : imageFile;
     if (!fileToAnalyze) {
       toast({
@@ -75,20 +74,19 @@ const MediaUploadSection = () => {
     setIsAnalyzing(true);
     
     try {
-      // Simulate API call with a delay
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      let analysisResult;
       
-      // Simulate a random result for demonstration
-      const isReal = Math.random() > 0.5;
-      const confidence = 0.5 + Math.random() * 0.45; // Between 50% and 95%
+      if (activeTab === "video") {
+        analysisResult = await analyzeVideo(fileToAnalyze);
+      } else {
+        analysisResult = await analyzeImage(fileToAnalyze);
+      }
       
       setResult({
         isPredictionDone: true,
-        isReal,
-        confidence,
-        details: isReal 
-          ? "No manipulation detected. Consistent lighting and natural facial features."
-          : "Detected unnatural facial movements and inconsistent lighting patterns."
+        isReal: analysisResult.isReal,
+        confidence: analysisResult.confidence,
+        details: analysisResult.details
       });
 
       toast({
@@ -97,11 +95,6 @@ const MediaUploadSection = () => {
       });
     } catch (error) {
       console.error("Analysis error:", error);
-      toast({
-        variant: "destructive",
-        title: "Analysis Failed",
-        description: "There was an error analyzing your media. Please try again.",
-      });
     } finally {
       setIsAnalyzing(false);
     }
@@ -230,7 +223,6 @@ const MediaUploadSection = () => {
             </Card>
           </TabsContent>
 
-          {/* Results Panel */}
           <Card className={`media-upload-container ${result?.isPredictionDone ? 'animate-fade-in' : 'hidden'}`}>
             <CardContent className="p-6">
               <h3 className="text-xl font-medium mb-6">Analysis Results</h3>

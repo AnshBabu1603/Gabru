@@ -1,9 +1,9 @@
-
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { Camera, Loader2, Check, X } from "lucide-react";
+import { analyzeCameraFrame } from "@/utils/mlModelApi";
 
 type FilterType = "none" | "grayscale" | "sepia" | "blur";
 
@@ -31,7 +31,6 @@ const CameraSection = () => {
   } | null>(null);
 
   useEffect(() => {
-    // Cleanup function to stop camera when component unmounts
     return () => {
       if (stream) {
         stream.getTracks().forEach(track => {
@@ -102,11 +101,9 @@ const CameraSection = () => {
     
     if (!ctx) return;
     
-    // Set canvas dimensions to match video
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
     
-    // Apply the current filter to the canvas context
     switch (currentFilter) {
       case "grayscale":
         ctx.filter = "grayscale(100%)";
@@ -121,24 +118,17 @@ const CameraSection = () => {
         ctx.filter = "none";
     }
     
-    // Draw video frame to canvas
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
     
     try {
-      // Simulate API call with a delay
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // Simulate a random result
-      const isReal = Math.random() > 0.5;
-      const confidence = 0.5 + Math.random() * 0.45; // 50-95%
+      const imageData = canvas.toDataURL('image/jpeg');
+      const analysisResult = await analyzeCameraFrame(imageData);
       
       setResult({
         isPredictionDone: true,
-        isReal,
-        confidence,
-        details: isReal 
-          ? "Live analysis shows natural facial expressions and consistent lighting patterns."
-          : "Analysis detected potential manipulation in facial expressions and unnatural eye movements."
+        isReal: analysisResult.isReal,
+        confidence: analysisResult.confidence,
+        details: analysisResult.details
       });
 
       toast({
@@ -147,11 +137,6 @@ const CameraSection = () => {
       });
     } catch (error) {
       console.error("Analysis error:", error);
-      toast({
-        variant: "destructive",
-        title: "Analysis Failed",
-        description: "There was an error analyzing your camera capture.",
-      });
     } finally {
       setIsAnalyzing(false);
     }
@@ -235,7 +220,6 @@ const CameraSection = () => {
           </CardContent>
         </Card>
 
-        {/* Results Card */}
         <Card className={`media-upload-container ${result?.isPredictionDone ? 'animate-fade-in' : 'hidden'}`}>
           <CardContent className="p-6">
             <h3 className="text-xl font-medium mb-6">Analysis Results</h3>
