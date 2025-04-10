@@ -61,15 +61,6 @@ const FaqSection = () => {
             </AccordionItem>
           ))}
         </Accordion>
-        
-        <div className="mt-12 text-center">
-          <p className="text-gray-600">
-            Still have questions? Contact our team at{" "}
-            <a href="mailto:support@defakex.com" className="text-teal-600 hover:underline">
-              support@defakex.com
-            </a>
-          </p>
-        </div>
       </div>
     </section>
   );
