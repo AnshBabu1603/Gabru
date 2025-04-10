@@ -58,9 +58,9 @@ const Header = () => {
       <div className="container mx-auto flex justify-between items-center p-4">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-teal-500 rounded-full flex items-center justify-center">
-            <span className="text-white font-bold text-xl">D</span>
+            <span className="text-white font-bold text-xl">G</span>
           </div>
-          <h1 className="text-xl font-bold">DeFakeX</h1>
+          <h1 className="text-xl font-bold">Gabru</h1>
         </div>
 
         {/* Desktop Navigation */}

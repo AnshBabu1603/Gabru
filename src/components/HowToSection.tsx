@@ -1,20 +1,13 @@
 
 import { Card, CardContent } from "@/components/ui/card";
-import { Upload, Camera, Loader2, CheckSquare } from "lucide-react";
+import { Upload, Loader2, CheckSquare } from "lucide-react";
 
 const HowToSection = () => {
   const uploadSteps = [
-    { title: "Choose File", description: "Click the upload area to select a video or image file" },
-    { title: "Wait for Processing", description: "Our AI analyzes your media for deepfake signatures" },
+    { title: "Choose File", description: "Click the upload area to select a video file" },
+    { title: "Wait for Processing", description: "Our AI analyzes your video for deepfake signatures" },
     { title: "View Results", description: "See detailed analysis with confidence score and insights" },
     { title: "Take Action", description: "Save the results or try with different media" }
-  ];
-
-  const cameraSteps = [
-    { title: "Start Camera", description: "Allow browser access to your camera" },
-    { title: "Apply Filters", description: "Optionally select filters to enhance detection" },
-    { title: "Capture & Analyze", description: "Take a screenshot for AI analysis" },
-    { title: "Check Results", description: "Review the authenticity verification details" }
   ];
 
   return (
@@ -22,8 +15,8 @@ const HowToSection = () => {
       <div className="max-w-6xl mx-auto">
         <h2 className="section-title">How To Use</h2>
         
-        <div className="grid md:grid-cols-2 gap-8 mt-10">
-          <div>
+        <div className="flex justify-center">
+          <div className="max-w-xl w-full">
             <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-md overflow-hidden">
               <div className="bg-teal-500 p-4">
                 <h3 className="text-xl font-medium text-white flex items-center">
@@ -35,29 +28,6 @@ const HowToSection = () => {
                   {uploadSteps.map((step, index) => (
                     <li key={index} className="mb-6 ml-6">
                       <span className="absolute flex items-center justify-center w-8 h-8 bg-teal-100 rounded-full -left-4 ring-4 ring-white">
-                        {index + 1}
-                      </span>
-                      <h4 className="font-semibold text-lg">{step.title}</h4>
-                      <p className="text-gray-600 text-sm">{step.description}</p>
-                    </li>
-                  ))}
-                </ol>
-              </CardContent>
-            </Card>
-          </div>
-          
-          <div>
-            <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-md overflow-hidden">
-              <div className="bg-blue-500 p-4">
-                <h3 className="text-xl font-medium text-white flex items-center">
-                  <Camera className="h-5 w-5 mr-2" /> Camera Method
-                </h3>
-              </div>
-              <CardContent className="p-6">
-                <ol className="relative border-l border-gray-200 ml-3">
-                  {cameraSteps.map((step, index) => (
-                    <li key={index} className="mb-6 ml-6">
-                      <span className="absolute flex items-center justify-center w-8 h-8 bg-blue-100 rounded-full -left-4 ring-4 ring-white">
                         {index + 1}
                       </span>
                       <h4 className="font-semibold text-lg">{step.title}</h4>
@@ -80,7 +50,7 @@ const HowToSection = () => {
               </div>
               <div>
                 <h4 className="font-medium">Processing Time</h4>
-                <p className="text-sm text-gray-600">Analysis typically takes 2-10 seconds depending on media length and complexity.</p>
+                <p className="text-sm text-gray-600">Analysis typically takes 2-10 seconds depending on video length and complexity.</p>
               </div>
             </div>
             

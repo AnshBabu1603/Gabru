@@ -4,8 +4,8 @@ import { CheckCircle } from "lucide-react";
 
 const AboutSection = () => {
   const features = [
-    "Real-time video analysis",
-    "Image forgery detection",
+    "Video analysis",
+    "Face swap detection",
     "Detailed confidence scoring",
     "Privacy-focused processing",
     "Multiple filter options",
@@ -20,7 +20,7 @@ const AboutSection = () => {
         <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-md mb-10">
           <CardContent className="p-6 md:p-8">
             <p className="text-lg leading-relaxed text-gray-700">
-              DeFakeX uses state-of-the-art deep learning models trained on thousands of real and manipulated media samples. 
+              Gabru uses state-of-the-art deep learning models trained on thousands of real and manipulated media samples. 
               Our algorithm analyzes subtle artifacts in facial movements, lighting inconsistencies, 
               and compression patterns to detect deepfakes with industry-leading accuracy.
             </p>
